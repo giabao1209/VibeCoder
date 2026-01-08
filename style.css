@@ -883,3 +883,149 @@ body {
   font-weight: 600;
   color: var(--accent-secondary);
 }
+
+/* ========================================
+   Mobile Responsive Styles (iOS/Android)
+   ======================================== */
+
+/* Safe area for notched phones (iPhone X+) */
+@supports (padding: env(safe-area-inset-top)) {
+  .app-container {
+    padding-top: calc(var(--spacing-lg) + env(safe-area-inset-top));
+    padding-bottom: calc(var(--spacing-lg) + env(safe-area-inset-bottom));
+    padding-left: calc(var(--spacing-md) + env(safe-area-inset-left));
+    padding-right: calc(var(--spacing-md) + env(safe-area-inset-right));
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 480px) {
+  :root {
+    --font-size-3xl: 2.25rem;
+    --font-size-2xl: 1.5rem;
+    --spacing-xl: 1.5rem;
+    --spacing-lg: 1rem;
+  }
+
+  .app-container {
+    padding: var(--spacing-md);
+  }
+
+  /* Header */
+  .app-header {
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) 0;
+  }
+
+  .logo h1 {
+    font-size: var(--font-size-lg);
+  }
+
+  .date-navigator {
+    width: 100%;
+    justify-content: space-between;
+    padding: var(--spacing-sm);
+  }
+
+  .current-date {
+    min-width: auto;
+    font-size: var(--font-size-sm);
+  }
+
+  /* Panels */
+  .panel {
+    padding: var(--spacing-lg);
+  }
+
+  .panel-header h2 {
+    font-size: var(--font-size-md);
+  }
+
+  /* Timer */
+  .timer-container {
+    width: 160px;
+    height: 160px;
+    margin: var(--spacing-lg) auto;
+  }
+
+  .timer-time {
+    font-size: var(--font-size-2xl);
+  }
+
+  .timer-controls {
+    flex-wrap: wrap;
+  }
+
+  .timer-btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+
+  .timer-settings {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  /* Logger */
+  .logger-time {
+    font-size: var(--font-size-2xl);
+  }
+
+  .toggle-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+  }
+
+  /* Task input */
+  .task-input-wrapper input,
+  .logger-input-wrapper input {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  /* Calendar modal */
+  .modal-content {
+    width: 95%;
+    padding: var(--spacing-lg);
+  }
+
+  .cal-day {
+    font-size: var(--font-size-xs);
+  }
+
+  /* Footer */
+  .app-footer {
+    padding: var(--spacing-md) 0;
+  }
+}
+
+/* Touch-friendly tap targets */
+@media (hover: none) and (pointer: coarse) {
+  .task-checkbox {
+    width: 28px;
+    height: 28px;
+  }
+
+  .task-delete {
+    opacity: 1;
+    padding: var(--spacing-sm);
+  }
+
+  .nav-btn,
+  .cal-nav-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Prevent pull-to-refresh on mobile */
+html, body {
+  overscroll-behavior-y: contain;
+}
+
+/* iOS input styling */
+input[type="text"],
+input[type="number"] {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: var(--radius-md);
+}
