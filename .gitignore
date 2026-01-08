@@ -1,0 +1,7 @@
+# VibeCoder
+
+Ignore everything but these files for GitHub Pages:
+node_modules/
+dist/
+package-lock.json
+*.log
