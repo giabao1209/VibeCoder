@@ -64,3 +64,5 @@ jobs:
           } else {
             gh release create v1.0.0 $exe --title 'VibeReader 1.0.0' --notes 'Windows portable release. Download VibeReader-1.0.0.exe and run it directly; Node.js and npm are not required.' --target main
           }
+
+# Trigger marker for the v1.0.0 release build.
