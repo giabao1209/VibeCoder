@@ -1,8 +1,8 @@
 {
   "name": "vibereader",
-  "version": "0.3.1",
-  "description": "A colorful live Markdown and LaTeX reader with tabs, chapter navigation, and document themes.",
-  "main": "main.js",
+  "version": "0.3.2",
+  "description": "A colorful live Markdown and LaTeX reader with tabs, chapter navigation, persistent sessions, and document themes.",
+  "main": "main-v2.js",
   "scripts": {
     "start": "electron .",
     "dev": "electron .",
@@ -29,10 +29,13 @@
       "output": "dist"
     },
     "files": [
-      "main.js",
-      "preload.js",
+      "main-v2.js",
+      "preload-safe.js",
+      "markdown-renderer.js",
       "renderer-v2.js",
       "latex-renderer.js",
+      "session-bootstrap.js",
+      "session-enhancer.js",
       "index.html",
       "style.css",
       "latex.css",
