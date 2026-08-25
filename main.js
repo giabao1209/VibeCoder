@@ -124,7 +124,10 @@ function createWindow(initialPaths = []) {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
-      contextIsolation: true
+      contextIsolation: true,
+      // The preload intentionally hosts markdown-it/highlight.js and path/url helpers.
+      // Keep the renderer isolated, but allow the preload to use normal Node modules.
+      sandbox: false
     }
   });
 
@@ -143,7 +146,7 @@ function createWindow(initialPaths = []) {
 }
 
 ipcMain.handle('files:open', async () => {
-  const result = await dialog.showOpenDialog({
+  const result = await dialog.showOpenDialog(mainWindow, {
     title: 'Open Markdown documents',
     properties: ['openFile', 'multiSelections'],
     filters: [
