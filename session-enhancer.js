@@ -19,6 +19,11 @@
     scrolls = {};
   }
 
+  function readJson(key, fallback = {}) {
+    try { return JSON.parse(localStorage.getItem(key) || '') || fallback; }
+    catch { return fallback; }
+  }
+
   function currentKey() {
     const path = documentPath.textContent.trim();
     if (!path) return null;
@@ -36,21 +41,15 @@
   }
 
   function buildDiskSnapshot() {
-    let session = {};
-    try {
-      session = JSON.parse(localStorage.getItem('vibereader.session') || '{}') || {};
-    } catch {
-      session = {};
-    }
-
     return {
-      version: 1,
+      version: 2,
       updatedAt: new Date().toISOString(),
-      session,
+      session: readJson('vibereader.session', {}),
       mode: localStorage.getItem('vibereader.mode') || 'chapters',
       theme: localStorage.getItem('vibereader.theme') || 'aurora',
       sidebar: localStorage.getItem('vibereader.sidebar') || 'open',
-      scrolls
+      scrolls,
+      multiview: readJson('vibereader.multiview', {})
     };
   }
 
@@ -84,6 +83,10 @@
     captureScroll();
     schedulePersist(220);
   }, { passive: true });
+
+  document.addEventListener('scroll', (event) => {
+    if (event.target?.classList?.contains('multi-pane-scroll')) schedulePersist(260);
+  }, true);
 
   document.addEventListener('click', () => {
     setTimeout(() => {
