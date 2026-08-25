@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="latex.css" />
   <link rel="stylesheet" href="themes.css" />
+  <link rel="stylesheet" href="multi-view.css" />
 </head>
 <body data-theme="aurora">
   <div class="ambient ambient-a"></div>
@@ -27,6 +28,12 @@
       <div class="topbar-actions">
         <button class="icon-button" id="toggleSidebarBtn" title="Ẩn/hiện mục lục">☰</button>
         <button class="primary-button" id="openBtn">＋ Mở tài liệu</button>
+        <button class="icon-button multi-view-button" id="multiViewBtn" title="Mở nhiều tài liệu cùng lúc · Ctrl+Shift+M">▦ Multi View</button>
+        <select class="select-control multi-layout-select" id="multiLayoutSelect" title="Số pane Multi View">
+          <option value="2">2 panes</option>
+          <option value="3">3 panes</option>
+          <option value="4">4 panes</option>
+        </select>
         <select class="select-control" id="modeSelect" title="Chế độ đọc">
           <option value="chapters">Theo chương</option>
           <option value="continuous">Cuộn liên tục</option>
@@ -62,7 +69,7 @@
             <h1>Mở Markdown hoặc LaTeX để đọc</h1>
             <p>VibeReader theo dõi trực tiếp file <strong>.md</strong> và <strong>.tex</strong> trên ổ đĩa. Bạn sửa rồi lưu trong VS Code hay editor khác thì giao diện đọc sẽ render lại gần như ngay lập tức.</p>
             <button class="primary-button large" id="emptyOpenBtn">Mở file .md / .tex</button>
-            <div class="shortcut-hint">Ctrl + O · Có thể mở nhiều Markdown và LaTeX cùng lúc</div>
+            <div class="shortcut-hint">Ctrl + O · Có thể chọn nhiều file cùng lúc · Ctrl + Shift + M mở Multi View</div>
           </div>
         </div>
 
@@ -87,6 +94,10 @@
             </div>
             <button class="nav-button" id="nextBtn">Chương sau →</button>
           </footer>
+        </div>
+
+        <div class="multi-view-stage hidden" id="multiViewStage">
+          <div class="multi-view-grid layout-2" id="multiViewGrid"></div>
         </div>
       </section>
     </section>
