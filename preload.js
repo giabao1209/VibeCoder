@@ -3,6 +3,7 @@ const path = require('path');
 const { pathToFileURL } = require('url');
 const MarkdownIt = require('markdown-it');
 const hljs = require('highlight.js');
+const { renderLatex } = require('./latex-renderer');
 
 const md = new MarkdownIt({
   html: false,
@@ -80,7 +81,8 @@ function renderMarkdown(source, filePath) {
 
   return {
     html: md.renderer.render(tokens, md.options, env),
-    headings
+    headings,
+    format: 'markdown'
   };
 }
 
@@ -91,6 +93,7 @@ contextBridge.exposeInMainWorld('readerApi', {
   unwatchPath: (filePath) => ipcRenderer.invoke('files:unwatch', filePath),
   openExternal: (url) => ipcRenderer.invoke('shell:openExternal', url),
   renderMarkdown,
+  renderLatex,
   onFileChanged: (callback) => {
     const listener = (_event, payload) => callback(payload);
     ipcRenderer.on('files:changed', listener);

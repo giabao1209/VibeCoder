@@ -7,16 +7,14 @@ const chokidar = require('chokidar');
 const watchers = new Map();
 let mainWindow = null;
 
-const SUPPORTED_EXTENSIONS = new Set(['.md', '.markdown', '.mdown', '.mkd', '.txt']);
+const SUPPORTED_EXTENSIONS = new Set(['.md', '.markdown', '.mdown', '.mkd', '.txt', '.tex']);
 
 function isReadableDocument(filePath) {
   return typeof filePath === 'string' && SUPPORTED_EXTENSIONS.has(path.extname(filePath).toLowerCase());
 }
 
 async function readDocument(filePath) {
-  if (!isReadableDocument(filePath)) {
-    throw new Error('Unsupported file type');
-  }
+  if (!isReadableDocument(filePath)) throw new Error('Unsupported file type');
 
   const resolved = path.resolve(filePath);
   const [content, stat] = await Promise.all([
@@ -46,7 +44,6 @@ async function readDocuments(paths) {
 
 function emitFileUpdate(filePath, type = 'changed') {
   if (!mainWindow || mainWindow.isDestroyed()) return;
-
   if (type === 'missing') {
     mainWindow.webContents.send('files:changed', { path: filePath, missing: true });
     return;
@@ -55,10 +52,7 @@ function emitFileUpdate(filePath, type = 'changed') {
   readDocument(filePath)
     .then((doc) => mainWindow.webContents.send('files:changed', doc))
     .catch((error) => {
-      mainWindow.webContents.send('files:changed', {
-        path: filePath,
-        error: error.message
-      });
+      mainWindow.webContents.send('files:changed', { path: filePath, error: error.message });
     });
 }
 
@@ -80,10 +74,7 @@ function watchDocument(filePath) {
   watcher.on('unlink', () => emitFileUpdate(resolved, 'missing'));
   watcher.on('error', (error) => {
     if (mainWindow && !mainWindow.isDestroyed()) {
-      mainWindow.webContents.send('files:changed', {
-        path: resolved,
-        error: error.message
-      });
+      mainWindow.webContents.send('files:changed', { path: resolved, error: error.message });
     }
   });
 
@@ -125,8 +116,7 @@ function createWindow(initialPaths = []) {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
-      // The preload intentionally hosts markdown-it/highlight.js and path/url helpers.
-      // Keep the renderer isolated, but allow the preload to use normal Node modules.
+      // Markdown/LaTeX rendering lives in preload; renderer remains isolated.
       sandbox: false
     }
   });
@@ -140,17 +130,17 @@ function createWindow(initialPaths = []) {
   });
 
   mainWindow.webContents.once('did-finish-load', () => sendOpenPaths(initialPaths));
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+  mainWindow.on('closed', () => { mainWindow = null; });
 }
 
 ipcMain.handle('files:open', async () => {
   const result = await dialog.showOpenDialog(mainWindow, {
-    title: 'Open Markdown documents',
+    title: 'Open Markdown or LaTeX documents',
     properties: ['openFile', 'multiSelections'],
     filters: [
+      { name: 'Readable documents', extensions: ['md', 'markdown', 'mdown', 'mkd', 'tex', 'txt'] },
       { name: 'Markdown', extensions: ['md', 'markdown', 'mdown', 'mkd'] },
+      { name: 'LaTeX', extensions: ['tex'] },
       { name: 'Text', extensions: ['txt'] }
     ]
   });
@@ -197,7 +187,6 @@ if (!gotLock) {
 
   app.whenReady().then(() => {
     createWindow(getInitialPaths(process.argv));
-
     app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });

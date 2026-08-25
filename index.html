@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; img-src 'self' data: file: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; font-src 'self' data:;" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' file:; img-src 'self' data: file: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'none'; font-src 'self' data: file:;" />
   <title>VibeReader</title>
+  <link rel="stylesheet" href="./node_modules/katex/dist/katex.min.css" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="latex.css" />
 </head>
 <body data-theme="aurora">
   <div class="ambient ambient-a"></div>
@@ -17,13 +19,13 @@
         <div class="brand-mark">V</div>
         <div>
           <div class="brand-name">VibeReader</div>
-          <div class="brand-subtitle">Live Markdown Reader</div>
+          <div class="brand-subtitle">Live Markdown + LaTeX Reader</div>
         </div>
       </div>
 
       <div class="topbar-actions">
         <button class="icon-button" id="toggleSidebarBtn" title="Ẩn/hiện mục lục">☰</button>
-        <button class="primary-button" id="openBtn">＋ Mở Markdown</button>
+        <button class="primary-button" id="openBtn">＋ Mở tài liệu</button>
         <select class="select-control" id="modeSelect" title="Chế độ đọc">
           <option value="chapters">Theo chương</option>
           <option value="continuous">Cuộn liên tục</option>
@@ -55,10 +57,10 @@
         <div class="empty-state" id="emptyState">
           <div class="empty-card">
             <div class="empty-icon">✦</div>
-            <h1>Mở một file Markdown để đọc</h1>
-            <p>VibeReader sẽ theo dõi file thật trên ổ đĩa. Bạn sửa và lưu trong VS Code, Notepad hay editor khác thì nội dung ở đây cập nhật gần như ngay lập tức.</p>
-            <button class="primary-button large" id="emptyOpenBtn">Mở file .md</button>
-            <div class="shortcut-hint">Ctrl + O · Có thể mở nhiều file cùng lúc</div>
+            <h1>Mở Markdown hoặc LaTeX để đọc</h1>
+            <p>VibeReader theo dõi trực tiếp file <strong>.md</strong> và <strong>.tex</strong> trên ổ đĩa. Bạn sửa rồi lưu trong VS Code hay editor khác thì giao diện đọc sẽ render lại gần như ngay lập tức.</p>
+            <button class="primary-button large" id="emptyOpenBtn">Mở file .md / .tex</button>
+            <div class="shortcut-hint">Ctrl + O · Có thể mở nhiều Markdown và LaTeX cùng lúc</div>
           </div>
         </div>
 
@@ -88,6 +90,6 @@
     </section>
   </main>
 
-  <script src="renderer.js"></script>
+  <script src="renderer-v2.js"></script>
 </body>
 </html>
