@@ -45,7 +45,16 @@
     await loadScript('renderer-v2.js');
     await loadScript('session-enhancer.js');
     await loadScript('multi-view.js');
+
+    if (window.__vibeMultiViewReady !== true) {
+      throw new Error('Multi View controller loaded but did not initialize');
+    }
   } catch (error) {
     console.error('[VibeReader] Renderer startup failed:', error);
+    const button = document.getElementById('multiViewBtn');
+    if (button) {
+      button.textContent = '⚠ Multi View';
+      button.title = `Multi View startup error: ${error?.message || error}`;
+    }
   }
 })();
