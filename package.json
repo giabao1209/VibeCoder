@@ -1,6 +1,6 @@
 {
   "name": "vibereader",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "A colorful live Markdown and LaTeX reader with persistent sessions, themes, and multi-document views.",
   "main": "main-v2.js",
   "scripts": {
