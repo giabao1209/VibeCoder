@@ -1,0 +1,331 @@
+/* VibeReader document themes v0.3
+   Theme keys intentionally reuse the original values so existing preferences keep working:
+   aurora = Candy Paper (default), sunset = Midnight Ink, ocean = Ocean Glass, forest = Sepia Scholar.
+*/
+
+/* ---------- shared document-theme behavior ---------- */
+.markdown-document {
+  transition: background 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.markdown-document h1,
+.markdown-document h2,
+.markdown-document h3,
+.markdown-document h4,
+.markdown-document blockquote,
+.markdown-document table,
+.markdown-document code,
+.markdown-document pre,
+.markdown-document img {
+  transition: color 180ms ease, background 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+/* =====================================================
+   CANDY PAPER — inspired by md2pdf.py, default theme
+   coral + teal + yellow on a bright paper canvas
+   ===================================================== */
+body[data-theme='aurora'] {
+  --bg: #0e1116;
+  --surface: rgba(25, 29, 35, 0.88);
+  --surface-strong: #1c2128;
+  --surface-soft: rgba(255,255,255,.055);
+  --border: rgba(255,255,255,.10);
+  --text: #f7f8fb;
+  --muted: #a9b0bd;
+  --accent: #ff6b6b;
+  --accent-2: #4ecdc4;
+  --accent-3: #ffd93d;
+  --success: #65d8a4;
+}
+body[data-theme='aurora'] .reader-scroll {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(255,107,107,.08), transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(78,205,196,.08), transparent 30%),
+    #15191f;
+}
+body[data-theme='aurora'] .markdown-document {
+  width: min(980px, 100%);
+  background: #fcfcfc;
+  color: #2d3436;
+  border: 1px solid #eceff1;
+  border-radius: 18px;
+  box-shadow: 0 24px 70px rgba(0,0,0,.28);
+  font-family: "Segoe UI", Inter, ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.68;
+}
+body[data-theme='aurora'] .markdown-document h1 {
+  margin-bottom: 30px;
+  padding-bottom: 15px;
+  text-align: center;
+  font-size: clamp(38px, 5vw, 58px);
+  letter-spacing: -.035em;
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  border-bottom: 3px solid rgba(78,205,196,.20);
+}
+body[data-theme='aurora'] .markdown-document h2 {
+  position: relative;
+  margin-top: 42px;
+  padding-bottom: 10px;
+  color: #4ecdc4;
+  font-size: 30px;
+}
+body[data-theme='aurora'] .markdown-document h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+}
+body[data-theme='aurora'] .markdown-document h3 { color: #ff6b6b; font-size: 21px; }
+body[data-theme='aurora'] .markdown-document h4 { color: #334155; }
+body[data-theme='aurora'] .markdown-document p,
+body[data-theme='aurora'] .markdown-document li,
+body[data-theme='aurora'] .markdown-document em { color: #3f474a; }
+body[data-theme='aurora'] .markdown-document strong { color: #20272a; }
+body[data-theme='aurora'] .markdown-document a { color: #ff5f67; text-decoration-color: rgba(255,95,103,.35); }
+body[data-theme='aurora'] .markdown-document li::marker { color: #4ecdc4; }
+body[data-theme='aurora'] .markdown-document hr {
+  background: linear-gradient(90deg, transparent, rgba(78,205,196,.45), rgba(255,107,107,.45), transparent);
+}
+body[data-theme='aurora'] .markdown-document blockquote {
+  color: #555;
+  border: 0;
+  border-left: 5px solid #ffd93d;
+  border-radius: 0 15px 15px 0;
+  background: rgba(255,217,61,.11);
+  box-shadow: 0 4px 15px rgba(0,0,0,.04);
+  font-style: italic;
+}
+body[data-theme='aurora'] .markdown-document code:not(pre code) {
+  color: #ff4757;
+  background: rgba(255,107,107,.10);
+  border: 0;
+  font-weight: 650;
+}
+body[data-theme='aurora'] .markdown-document pre.hljs {
+  background: #282a36;
+  border: 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,.16);
+}
+body[data-theme='aurora'] .markdown-document table {
+  border: 0;
+  box-shadow: 0 5px 20px rgba(0,0,0,.07);
+  border-radius: 12px;
+}
+body[data-theme='aurora'] .markdown-document th {
+  color: #fff;
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+  border-color: rgba(255,255,255,.20);
+}
+body[data-theme='aurora'] .markdown-document td {
+  color: #364046;
+  background: #fff;
+  border-color: #eef1f2;
+}
+body[data-theme='aurora'] .markdown-document tr:nth-child(even) td { background: #f8f9fa; }
+body[data-theme='aurora'] .markdown-document img {
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0,0,0,.12);
+}
+body[data-theme='aurora'] .markdown-document .katex { color: #263238; }
+
+/* =====================================================
+   MIDNIGHT INK — dark editorial / neon technical theme
+   ===================================================== */
+body[data-theme='sunset'] {
+  --bg: #090a12;
+  --surface: rgba(18,19,34,.90);
+  --surface-strong: #15172a;
+  --surface-soft: rgba(255,255,255,.05);
+  --border: rgba(255,255,255,.09);
+  --text: #f7f5ff;
+  --muted: #a7a3bd;
+  --accent: #c084fc;
+  --accent-2: #22d3ee;
+  --accent-3: #fb7185;
+}
+body[data-theme='sunset'] .reader-scroll {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(192,132,252,.08), transparent 28%),
+    radial-gradient(circle at 84% 18%, rgba(34,211,238,.07), transparent 32%),
+    #0d0f1a;
+}
+body[data-theme='sunset'] .markdown-document {
+  background: linear-gradient(180deg, rgba(192,132,252,.045), transparent 240px), #141726;
+  color: #e8e8f3;
+  border-color: rgba(255,255,255,.09);
+  box-shadow: 0 28px 80px rgba(0,0,0,.36);
+}
+body[data-theme='sunset'] .markdown-document h1 {
+  background: linear-gradient(105deg, #d8b4fe, #67e8f9, #f9a8d4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+body[data-theme='sunset'] .markdown-document h2 { color: #67e8f9; }
+body[data-theme='sunset'] .markdown-document h3 { color: #f0abfc; }
+body[data-theme='sunset'] .markdown-document h4,
+body[data-theme='sunset'] .markdown-document strong { color: #fff; }
+body[data-theme='sunset'] .markdown-document p,
+body[data-theme='sunset'] .markdown-document li,
+body[data-theme='sunset'] .markdown-document em { color: #d7d7e6; }
+body[data-theme='sunset'] .markdown-document a { color: #f9a8d4; }
+body[data-theme='sunset'] .markdown-document blockquote {
+  border-color: rgba(192,132,252,.28);
+  border-left-color: #c084fc;
+  background: linear-gradient(100deg, rgba(192,132,252,.12), rgba(34,211,238,.035));
+  color: #dedcf1;
+}
+body[data-theme='sunset'] .markdown-document code:not(pre code) {
+  color: #f9a8d4;
+  border-color: rgba(249,168,212,.18);
+  background: rgba(249,168,212,.08);
+}
+body[data-theme='sunset'] .markdown-document pre.hljs { background: #090b13; }
+body[data-theme='sunset'] .markdown-document th { background: linear-gradient(135deg, rgba(192,132,252,.24), rgba(34,211,238,.16)); }
+body[data-theme='sunset'] .markdown-document .katex { color: #f5f3ff; }
+
+/* =====================================================
+   OCEAN GLASS — airy blue/teal paper theme
+   ===================================================== */
+body[data-theme='ocean'] {
+  --bg: #07151c;
+  --surface: rgba(10,36,47,.88);
+  --surface-strong: #0e2935;
+  --surface-soft: rgba(255,255,255,.055);
+  --border: rgba(202,241,255,.11);
+  --text: #ecfbff;
+  --muted: #9fc4cf;
+  --accent: #2dd4bf;
+  --accent-2: #60a5fa;
+  --accent-3: #38bdf8;
+}
+body[data-theme='ocean'] .reader-scroll {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(45,212,191,.10), transparent 28%),
+    radial-gradient(circle at 80% 16%, rgba(96,165,250,.10), transparent 30%),
+    #0b1d25;
+}
+body[data-theme='ocean'] .markdown-document {
+  background: linear-gradient(180deg, rgba(96,165,250,.055), transparent 240px), #f4fbfd;
+  color: #18333d;
+  border-color: #d7ebf1;
+  box-shadow: 0 26px 70px rgba(1,18,24,.28);
+}
+body[data-theme='ocean'] .markdown-document h1 {
+  background: linear-gradient(110deg, #0f766e, #2563eb, #0891b2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+body[data-theme='ocean'] .markdown-document h2 { color: #0f8c88; }
+body[data-theme='ocean'] .markdown-document h3 { color: #2563eb; }
+body[data-theme='ocean'] .markdown-document h4,
+body[data-theme='ocean'] .markdown-document strong { color: #17313a; }
+body[data-theme='ocean'] .markdown-document p,
+body[data-theme='ocean'] .markdown-document li,
+body[data-theme='ocean'] .markdown-document em { color: #31505a; }
+body[data-theme='ocean'] .markdown-document a { color: #2563eb; }
+body[data-theme='ocean'] .markdown-document li::marker { color: #0f9f98; }
+body[data-theme='ocean'] .markdown-document blockquote {
+  color: #28515c;
+  border: 1px solid rgba(45,212,191,.24);
+  border-left: 5px solid #2dd4bf;
+  background: linear-gradient(100deg, rgba(45,212,191,.11), rgba(96,165,250,.07));
+}
+body[data-theme='ocean'] .markdown-document code:not(pre code) {
+  color: #0e7490;
+  background: #e6f7fb;
+  border-color: #ccebf2;
+}
+body[data-theme='ocean'] .markdown-document pre.hljs {
+  background: #0b2530;
+  border-color: rgba(255,255,255,.05);
+}
+body[data-theme='ocean'] .markdown-document table { border-color: #d6e8ed; }
+body[data-theme='ocean'] .markdown-document th {
+  color: #fff;
+  background: linear-gradient(135deg, #0f9f98, #3b82f6);
+  border-color: rgba(255,255,255,.18);
+}
+body[data-theme='ocean'] .markdown-document td { color: #31505a; background: #fbfeff; border-color: #e1eef1; }
+body[data-theme='ocean'] .markdown-document tr:nth-child(even) td { background: #eef8fb; }
+body[data-theme='ocean'] .markdown-document .katex { color: #17313a; }
+
+/* =====================================================
+   SEPIA SCHOLAR — warm book / academic reading theme
+   ===================================================== */
+body[data-theme='forest'] {
+  --bg: #17130d;
+  --surface: rgba(42,34,24,.90);
+  --surface-strong: #33291d;
+  --surface-soft: rgba(255,245,225,.055);
+  --border: rgba(255,239,210,.11);
+  --text: #fff8eb;
+  --muted: #c1ad90;
+  --accent: #c07a48;
+  --accent-2: #a7a85c;
+  --accent-3: #d6a657;
+}
+body[data-theme='forest'] .reader-scroll {
+  background:
+    radial-gradient(circle at 18% 10%, rgba(192,122,72,.08), transparent 28%),
+    radial-gradient(circle at 82% 18%, rgba(167,168,92,.07), transparent 30%),
+    #211a12;
+}
+body[data-theme='forest'] .markdown-document {
+  background: #fbf4e8;
+  color: #463b2e;
+  border-color: #e8dac6;
+  box-shadow: 0 26px 70px rgba(20,13,6,.30);
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.74;
+}
+body[data-theme='forest'] .markdown-document h1 {
+  color: #7a4d2f;
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  border-bottom: 2px solid #d9b890;
+  padding-bottom: 14px;
+}
+body[data-theme='forest'] .markdown-document h2 { color: #8b5e34; }
+body[data-theme='forest'] .markdown-document h3 { color: #6f7840; }
+body[data-theme='forest'] .markdown-document h4,
+body[data-theme='forest'] .markdown-document strong { color: #3b2e22; }
+body[data-theme='forest'] .markdown-document p,
+body[data-theme='forest'] .markdown-document li,
+body[data-theme='forest'] .markdown-document em { color: #4e4336; }
+body[data-theme='forest'] .markdown-document a { color: #9b5f31; }
+body[data-theme='forest'] .markdown-document li::marker { color: #9a7a45; }
+body[data-theme='forest'] .markdown-document blockquote {
+  color: #5c4d3d;
+  border: 1px solid #ead9bd;
+  border-left: 5px solid #c9a061;
+  background: #f4ead8;
+  box-shadow: none;
+}
+body[data-theme='forest'] .markdown-document code:not(pre code) {
+  color: #8b4f35;
+  background: #f0e1cf;
+  border-color: #e2cdb3;
+}
+body[data-theme='forest'] .markdown-document pre.hljs {
+  background: #29231d;
+  border-color: rgba(255,255,255,.04);
+}
+body[data-theme='forest'] .markdown-document table { border-color: #e2d2bd; }
+body[data-theme='forest'] .markdown-document th {
+  color: #fffaf2;
+  background: linear-gradient(135deg, #9b6841, #8f8f4f);
+  border-color: rgba(255,255,255,.16);
+}
+body[data-theme='forest'] .markdown-document td { color: #4e4336; background: #fffaf1; border-color: #eadfce; }
+body[data-theme='forest'] .markdown-document tr:nth-child(even) td { background: #f5ecdf; }
+body[data-theme='forest'] .markdown-document img { border-color: #e0cfb8; box-shadow: 0 10px 26px rgba(75,50,25,.13); }
+body[data-theme='forest'] .markdown-document .katex { color: #3b2e22; }
