@@ -23,20 +23,29 @@
       if (disk.scrolls && typeof disk.scrolls === 'object') {
         localStorage.setItem('vibereader.scrolls', JSON.stringify(disk.scrolls));
       }
+      if (disk.multiview && typeof disk.multiview === 'object') {
+        localStorage.setItem('vibereader.multiview', JSON.stringify(disk.multiview));
+      }
     }
   } catch (error) {
     console.error('[VibeReader] Could not restore persisted session:', error);
   }
 
-  const renderer = document.createElement('script');
-  renderer.src = 'renderer-v2.js';
-  renderer.onload = () => {
-    const enhancer = document.createElement('script');
-    enhancer.src = 'session-enhancer.js';
-    document.body.appendChild(enhancer);
-  };
-  renderer.onerror = () => {
-    console.error('[VibeReader] renderer-v2.js failed to load.');
-  };
-  document.body.appendChild(renderer);
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = () => reject(new Error(`${src} failed to load`));
+      document.body.appendChild(script);
+    });
+  }
+
+  try {
+    await loadScript('renderer-v2.js');
+    await loadScript('session-enhancer.js');
+    await loadScript('multi-view.js');
+  } catch (error) {
+    console.error('[VibeReader] Renderer startup failed:', error);
+  }
 })();
