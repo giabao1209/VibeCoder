@@ -1,6 +1,6 @@
 {
   "name": "vibereader",
-  "version": "0.4.1",
+  "version": "1.0.0",
   "description": "A colorful live Markdown and LaTeX reader with persistent sessions, themes, and multi-document views.",
   "main": "main-v2.js",
   "scripts": {
@@ -24,6 +24,7 @@
   "build": {
     "appId": "com.vibecoder.vibereader",
     "productName": "VibeReader",
+    "artifactName": "VibeReader-${version}.${ext}",
     "asar": true,
     "directories": {
       "output": "dist"
