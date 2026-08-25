@@ -1,33 +1,48 @@
 {
-  "name": "vibecoder",
-  "version": "1.0.0",
-  "description": "VibeCoder - Productivity Hub with Tasks, Pomodoro & Time Logger",
+  "name": "vibereader",
+  "version": "0.1.0",
+  "description": "A colorful live Markdown reader with tabs and chapter navigation.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
+    "dev": "electron .",
     "build": "electron-builder --win portable",
     "build:installer": "electron-builder --win nsis"
   },
   "author": "VibeCoder",
   "license": "MIT",
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "highlight.js": "^11.10.0",
+    "markdown-it": "^14.1.0"
+  },
   "devDependencies": {
-    "electron": "^28.0.0",
-    "electron-builder": "^24.9.1"
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.vibecoder.app",
-    "productName": "VibeCoder",
+    "appId": "com.vibecoder.vibereader",
+    "productName": "VibeReader",
+    "asar": true,
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer.js",
+      "index.html",
+      "style.css",
+      "icon-512.png",
+      "package.json"
+    ],
     "win": {
       "target": "portable",
-      "icon": "icon.ico"
+      "icon": "icon-512.png"
     },
-    "files": [
-      "**/*",
-      "!dist/**",
-      "!node_modules/.cache/**"
-    ]
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   }
 }
