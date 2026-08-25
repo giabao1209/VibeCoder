@@ -1,7 +1,7 @@
 {
   "name": "vibereader",
-  "version": "0.3.2",
-  "description": "A colorful live Markdown and LaTeX reader with tabs, chapter navigation, persistent sessions, and document themes.",
+  "version": "0.4.0",
+  "description": "A colorful live Markdown and LaTeX reader with persistent sessions, themes, and multi-document views.",
   "main": "main-v2.js",
   "scripts": {
     "start": "electron .",
@@ -36,10 +36,12 @@
       "latex-renderer.js",
       "session-bootstrap.js",
       "session-enhancer.js",
+      "multi-view.js",
       "index.html",
       "style.css",
       "latex.css",
       "themes.css",
+      "multi-view.css",
       "icon-512.png",
       "package.json"
     ],
