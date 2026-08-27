@@ -12,6 +12,7 @@
   let dirty = false;
   let saveTimer = null;
   let restoreTimer = null;
+  let navigationLockUntil = 0;
 
   try {
     scrolls = JSON.parse(localStorage.getItem('vibereader.scrolls') || '{}') || {};
@@ -69,9 +70,16 @@
     saveTimer = setTimeout(persistNow, delay);
   }
 
+  function lockNavigation(ms = 850) {
+    navigationLockUntil = Math.max(navigationLockUntil, Date.now() + ms);
+    clearTimeout(restoreTimer);
+  }
+
   function restoreScrollSoon() {
     clearTimeout(restoreTimer);
+    if (Date.now() < navigationLockUntil) return;
     restoreTimer = setTimeout(() => {
+      if (Date.now() < navigationLockUntil) return;
       const key = currentKey();
       if (!key) return;
       const value = Number(scrolls[key]);
@@ -80,9 +88,10 @@
   }
 
   function isNavigationControl(target) {
-    return Boolean(target?.closest?.(
-      '.toc-chapter, .toc-section, #prevBtn, #nextBtn, .multi-pane-prev, .multi-pane-next'
-    ));
+    if (!target?.closest) return false;
+    if (target.closest('.toc-chapter, .toc-section, #prevBtn, #nextBtn, .multi-pane-prev, .multi-pane-next')) return true;
+    const link = target.closest('#markdownDocument a');
+    return Boolean(link && String(link.getAttribute('href') || '').startsWith('#'));
   }
 
   readerScroll.addEventListener('scroll', () => {
@@ -96,16 +105,19 @@
 
   document.addEventListener('click', (event) => {
     const navigationClick = isNavigationControl(event.target);
+    if (navigationClick) lockNavigation();
     setTimeout(() => {
       schedulePersist(navigationClick ? 120 : 0);
       if (!navigationClick) restoreScrollSoon();
     }, 0);
   }, true);
 
-  document.addEventListener('change', () => {
+  document.addEventListener('change', (event) => {
+    const modeChange = event.target === modeSelect;
+    if (modeChange) lockNavigation();
     setTimeout(() => {
       schedulePersist(0);
-      restoreScrollSoon();
+      if (!modeChange) restoreScrollSoon();
     }, 0);
   }, true);
 
