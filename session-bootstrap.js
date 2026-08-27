@@ -42,7 +42,7 @@
   }
 
   try {
-    await loadScript('renderer-v2.js');
+    await loadScript('renderer-v3.js');
     await loadScript('session-enhancer.js');
     await loadScript('multi-view.js');
 
