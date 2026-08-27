@@ -42,7 +42,7 @@
 
   function buildDiskSnapshot() {
     return {
-      version: 2,
+      version: 3,
       updatedAt: new Date().toISOString(),
       session: readJson('vibereader.session', {}),
       mode: localStorage.getItem('vibereader.mode') || 'chapters',
@@ -79,6 +79,12 @@
     }, 40);
   }
 
+  function isNavigationControl(target) {
+    return Boolean(target?.closest?.(
+      '.toc-chapter, .toc-section, #prevBtn, #nextBtn, .multi-pane-prev, .multi-pane-next'
+    ));
+  }
+
   readerScroll.addEventListener('scroll', () => {
     captureScroll();
     schedulePersist(220);
@@ -88,10 +94,11 @@
     if (event.target?.classList?.contains('multi-pane-scroll')) schedulePersist(260);
   }, true);
 
-  document.addEventListener('click', () => {
+  document.addEventListener('click', (event) => {
+    const navigationClick = isNavigationControl(event.target);
     setTimeout(() => {
-      schedulePersist(0);
-      restoreScrollSoon();
+      schedulePersist(navigationClick ? 120 : 0);
+      if (!navigationClick) restoreScrollSoon();
     }, 0);
   }, true);
 
