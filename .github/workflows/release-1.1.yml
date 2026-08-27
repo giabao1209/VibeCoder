@@ -1,3 +1,4 @@
+# VibeReader 1.1 release pipeline
 name: Build VibeReader 1.1
 
 on:
