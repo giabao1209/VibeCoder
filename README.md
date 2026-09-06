@@ -11,8 +11,34 @@ VibeReader is a standalone, colorful Markdown and lightweight LaTeX reader built
 - Nested table of contents plus previous/next chapter navigation.
 - Chapter mode and continuous-reading mode.
 - Lightweight LaTeX support with KaTeX-powered math rendering.
-- Syntax-highlighted code, local images, tables, links, and blockquotes.
+- Syntax-highlighted code, local images, tables, links, blockquotes, and Mermaid diagrams.
 - Restore last-open tabs and chapter positions on restart.
+
+## Mermaid diagrams
+
+VibeReader 1.2 renders Mermaid diagrams inside Markdown instead of showing their source as ordinary code.
+
+Standard Mermaid fences work:
+
+````markdown
+```mermaid
+classDiagram
+    AActor <|-- AController
+    AController <|-- APlayerController
+```
+````
+
+VibeReader also auto-detects unlabelled fenced blocks when their first meaningful line is a Mermaid diagram declaration such as `classDiagram`, `flowchart`, `sequenceDiagram`, `stateDiagram`, `erDiagram`, `gantt`, `mindmap`, or another supported Mermaid diagram type:
+
+````markdown
+```
+classDiagram
+    AActor <|-- AController
+    AController <|-- APlayerController
+```
+````
+
+A fenced block explicitly labelled as another language (`cpp`, `js`, `python`, etc.) remains syntax-highlighted source code even if its contents contain Mermaid-like words.
 
 ## Document themes
 
