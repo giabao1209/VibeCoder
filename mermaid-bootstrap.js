@@ -1,5 +1,13 @@
 import mermaid from './node_modules/mermaid/dist/mermaid.esm.min.mjs';
 
+if (!document.querySelector('link[data-vibereader-mermaid-style]')) {
+  const stylesheet = document.createElement('link');
+  stylesheet.rel = 'stylesheet';
+  stylesheet.href = 'mermaid.css';
+  stylesheet.dataset.vibereaderMermaidStyle = 'true';
+  document.head.appendChild(stylesheet);
+}
+
 mermaid.initialize({
   startOnLoad: false,
   securityLevel: 'strict',
