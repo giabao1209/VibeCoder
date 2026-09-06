@@ -20,6 +20,51 @@ const md = new MarkdownIt({
   }
 });
 
+const MERMAID_FENCE_LANGUAGES = new Set(['mermaid', 'mmd']);
+const MERMAID_START = /^(?:classDiagram(?:-v2)?|sequenceDiagram|flowchart(?:-elk)?|graph|stateDiagram(?:-v2)?|erDiagram|journey|gantt|pie|quadrantChart|requirementDiagram|gitGraph|mindmap|timeline|zenuml|sankey-beta|xychart-beta|block-beta|packet-beta|kanban|architecture-beta|radar-beta|treemap-beta|C4Context|C4Container|C4Component|C4Dynamic|C4Deployment)\b/i;
+
+function fenceLanguage(info) {
+  return String(info || '').trim().split(/\s+/)[0].toLowerCase();
+}
+
+function looksLikeMermaid(source) {
+  const lines = String(source || '').replace(/^\uFEFF/, '').split(/\r?\n/);
+  let inFrontmatter = false;
+
+  for (let index = 0; index < Math.min(lines.length, 40); index += 1) {
+    const line = lines[index].trim();
+    if (!line) continue;
+
+    if (line === '---') {
+      inFrontmatter = !inFrontmatter;
+      continue;
+    }
+    if (inFrontmatter) continue;
+
+    // Mermaid comments and init directives may appear before the diagram declaration.
+    if (line.startsWith('%%')) continue;
+
+    return MERMAID_START.test(line);
+  }
+
+  return false;
+}
+
+const defaultFenceRenderer = md.renderer.rules.fence;
+md.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  const language = fenceLanguage(token.info);
+  const explicitMermaid = MERMAID_FENCE_LANGUAGES.has(language) || MERMAID_START.test(language);
+  const implicitMermaid = !language && looksLikeMermaid(token.content);
+
+  if (explicitMermaid || implicitMermaid) {
+    const source = md.utils.escapeHtml(String(token.content || ''));
+    return `<div class="mermaid-shell"><pre class="mermaid-source" data-vibereader-mermaid="pending">${source}</pre></div>\n`;
+  }
+
+  return defaultFenceRenderer(tokens, idx, options, env, self);
+};
+
 const defaultImageRenderer = md.renderer.rules.image || ((tokens, idx, options, env, self) => {
   return self.renderToken(tokens, idx, options);
 });
@@ -84,4 +129,4 @@ function renderMarkdown(source, filePath) {
   };
 }
 
-module.exports = { renderMarkdown };
+module.exports = { renderMarkdown, looksLikeMermaid };
