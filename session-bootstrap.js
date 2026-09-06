@@ -31,10 +31,11 @@
     console.error('[VibeReader] Could not restore persisted session:', error);
   }
 
-  function loadScript(src) {
+  function loadScript(src, type = 'text/javascript') {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = src;
+      script.type = type;
       script.onload = resolve;
       script.onerror = () => reject(new Error(`${src} failed to load`));
       document.body.appendChild(script);
@@ -42,6 +43,7 @@
   }
 
   try {
+    await loadScript('mermaid-bootstrap.js', 'module');
     await loadScript('renderer-v3.js');
     await loadScript('session-enhancer.js');
     await loadScript('multi-view.js');
